@@ -1,0 +1,163 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-core-app-navigation-and-page-structure-for-a-free-fire-max-tournament-app-with-these-primary-sections-home-upcoming-tournaments-tournaments-browse-search-tournament-details-create-tournament-admin-organizer-my-registrations-and-profile",
+      "featureTitle": "Create the core app navigation and page structure for a Free Fire Max Tournament App with these primary sections: Home (upcoming tournaments), Tournaments (browse/search), Tournament Details, Create Tournament (admin/organizer), My Registrations, and Profile.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/components/AppNav.tsx",
+        "frontend/src/components/TournamentCard.tsx",
+        "frontend/src/pages/CreateTournamentPage.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/MyRegistrationsPage.tsx",
+        "frontend/src/pages/ProfilePage.tsx",
+        "frontend/src/pages/TournamentDetailsPage.tsx",
+        "frontend/src/pages/TournamentsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-a-signed-in-user-experience-showing-the-user-as-authenticated-and-gating-organizer-admin-actions-like-creating-editing-tournaments-behind-authentication",
+      "featureTitle": "Implement Internet Identity sign-in and a signed-in user experience (showing the user as authenticated, and gating organizer/admin actions like creating/editing tournaments behind authentication).",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/components/AuthStatusButton.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/components/RequireAuth.tsx",
+        "frontend/src/hooks/useAuth.ts",
+        "frontend/src/hooks/useCurrentUser.ts",
+        "frontend/src/pages/CreateTournamentPage.tsx",
+        "frontend/src/pages/ProfilePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-tournament-registration-flows-for-players-teams-allow-an-authenticated-user-to-register-capture-in-game-name-ign-optional-team-name-and-squad-member-igns-up-to-the-tournament-s-team-size-and-allow-the-user-to-view-cancel-their-registration-when-registration-is-open",
+      "featureTitle": "Implement tournament registration flows for players/teams: allow an authenticated user to register, capture in-game name (IGN), optional team name, and squad member IGNs (up to the tournament’s team size), and allow the user to view/cancel their registration when registration is open.",
+      "files": [
+        "frontend/src/components/MyRegistrationPanel.tsx",
+        "frontend/src/components/OrganizerRegistrationsTable.tsx",
+        "frontend/src/components/RegistrationForm.tsx",
+        "frontend/src/pages/MyRegistrationsPage.tsx",
+        "frontend/src/pages/TournamentDetailsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-match-bracket-management-for-organizers-ability-to-create-match-rounds-at-least-manual-round-creation-assign-registered-teams-players-into-matches-record-match-results-placement-points-or-winner-and-display-a-read-only-bracket-round-view-for-participants",
+      "featureTitle": "Add match/bracket management for organizers: ability to create match rounds (at least manual round creation), assign registered teams/players into matches, record match results (placement/points or winner), and display a read-only bracket/round view for participants.",
+      "files": [
+        "frontend/src/pages/TournamentDetailsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-an-organizer-admin-dashboard-for-managing-a-tournament-edit-tournament-info-open-close-registrations-lock-the-bracket-and-publish-announcements-text-updates-shown-on-the-tournament-details-page",
+      "featureTitle": "Provide an organizer/admin dashboard for managing a tournament: edit tournament info, open/close registrations, lock the bracket, and publish announcements (text updates) shown on the Tournament Details page.",
+      "files": [
+        "frontend/src/components/OrganizerTournamentPanel.tsx",
+        "frontend/src/pages/TournamentDetailsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-distinctive-visual-theme-across-the-app-colors-typography-spacing-and-components-suitable-for-an-esports-tournament-experience-avoiding-blue-purple-as-primary-brand-colors",
+      "featureTitle": "Apply a coherent, distinctive visual theme across the app (colors, typography, spacing, and components) suitable for an esports tournament experience, avoiding blue/purple as primary brand colors.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/components/TournamentCard.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-include-required-static-images-as-frontend-assets-and-use-them-in-the-ui-header-hero-and-basic-branding-store-them-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
+      "featureTitle": "Generate and include required static images as frontend assets and use them in the UI (header/hero and basic branding). Store them under frontend/public/assets/generated and reference them directly from the frontend.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

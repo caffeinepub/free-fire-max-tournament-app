@@ -1,0 +1,301 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Free Fire Max Tournament App (MVP) — Frontend Implementation Plan",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create core navigation and page structure for tournaments browsing, details, creation, registrations, and profile.",
+      "acceptanceCriteria": [
+        "App has a working navigation layout that lets users reach all primary sections.",
+        "Routes/pages render without placeholder errors and use English UI text.",
+        "Tournament list and details views are wired to data queries (even if seeded with initial sample data until backend is complete)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app shell (layout + router outlet) and wire primary routes: Home (upcoming), Tournaments (browse/search), Tournament Details, Create Tournament, My Registrations, and Profile; ensure English UI text and no placeholder errors."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared layout with header + navigation links to all primary sections, and a content container for page routing."
+        },
+        {
+          "path": "frontend/src/components/AppNav.tsx",
+          "operation": "create",
+          "description": "Create the primary navigation component (links to Home, Tournaments, My Registrations, Profile, and Create Tournament when permitted) and integrate it into the layout."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Implement Home page showing upcoming tournaments; wire to tournaments query hook and display a compact list (fallback to seeded sample data if query is unavailable/empty)."
+        },
+        {
+          "path": "frontend/src/pages/TournamentsPage.tsx",
+          "operation": "create",
+          "description": "Implement browse/search/filter UI for tournaments (name, region, status) and wire to a filtered tournaments query hook; navigate to Tournament Details."
+        },
+        {
+          "path": "frontend/src/pages/TournamentDetailsPage.tsx",
+          "operation": "create",
+          "description": "Implement tournament details view (rules, region, dates, slots, status, prize details) and wire to a tournament-by-id query hook; provide sections for registration, rounds/bracket (read-only), and announcements (read-only)."
+        },
+        {
+          "path": "frontend/src/pages/CreateTournamentPage.tsx",
+          "operation": "create",
+          "description": "Implement create tournament form UI and wire submit to backend create capability via a mutation hook; the page itself should be guarded (auth/role) elsewhere per REQ-2."
+        },
+        {
+          "path": "frontend/src/pages/MyRegistrationsPage.tsx",
+          "operation": "create",
+          "description": "Implement My Registrations page listing the signed-in user’s registrations, with navigation back to details; wire to registrations query hook(s) (initially aggregate from tournaments + per-tournament registrations until a dedicated backend list exists)."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "create",
+          "description": "Implement Profile page showing signed-in status and user profile name; wire to user profile query hook and provide profile setup/edit UI per REQ-2."
+        },
+        {
+          "path": "frontend/src/hooks/useTournaments.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for listing tournaments, filtered tournaments, and fetching tournament details using the available backend actor; include safe fallbacks (e.g., seeded sample tournaments) when actor is unavailable."
+        },
+        {
+          "path": "frontend/src/components/TournamentCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable tournament summary card used by Home and Tournaments pages to keep list UI consistent."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement Internet Identity sign-in UX, display authenticated state, and gate organizer/admin actions and registrations behind authentication.",
+      "acceptanceCriteria": [
+        "Unauthenticated users can browse tournaments but cannot create/edit tournaments or register.",
+        "Authenticated users can view their profile and register for tournaments.",
+        "UI clearly indicates signed-in/signed-out state in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AuthStatusButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using the existing Internet Identity hook to show signed-in/signed-out state; on logout, clear cached app data (React Query) as required. Use the selected \"authorization\" component guidance for authentication UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAuth.ts",
+          "operation": "create",
+          "description": "Create a small auth helper hook that derives isAuthenticated from the existing Internet Identity context and exposes convenience flags for UI gating."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUser.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for getCallerUserRole, isCallerAdmin, and getCallerUserProfile (with loading semantics that avoid profile-setup modal flash). Use the selected \"authorization\" component guidance for profile setup flow. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create a modal/dialog that prompts newly authenticated users for a display name and saves it via saveCallerUserProfile; do not show principal id; ensure English copy. Use the selected \"authorization\" component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/RequireAuth.tsx",
+          "operation": "create",
+          "description": "Create a route/page guard wrapper that blocks unauthenticated users from protected pages/actions (Create Tournament, registrations) and shows an English access message with a login call-to-action. Use the selected \"authorization\" component guidance for access denied UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/RequireOrganizerOrAdmin.tsx",
+          "operation": "create",
+          "description": "Create a guard wrapper for organizer/admin-only sections (tournament management controls, bracket management) using role/admin checks; ensure non-organizers cannot access organizer controls in UI. Use the selected \"authorization\" component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Integrate AuthStatusButton in the header and conditionally render protected navigation items (e.g., Create Tournament, My Registrations) based on authentication/role state."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Wire Profile page to current user profile query; trigger ProfileSetupModal only when authenticated and profile is missing; display the profile name in English."
+        },
+        {
+          "path": "frontend/src/pages/CreateTournamentPage.tsx",
+          "operation": "modify",
+          "description": "Wrap the page content with RequireAuth and, if organizer/admin restriction is desired for creation in MVP, RequireOrganizerOrAdmin; ensure unauthenticated users cannot create."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement tournament registration UI flows: register with IGN/team info, view/cancel registrations, and show organizer view of entries (UI side).",
+      "acceptanceCriteria": [
+        "A user can register for an open tournament and sees confirmation in the UI.",
+        "Registration is blocked when the tournament is full or registration is closed/locked.",
+        "My Registrations page shows the user’s registrations and their status.",
+        "Organizer can view a list of registered entries for their tournament."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useRegistrations.ts",
+          "operation": "create",
+          "description": "Create React Query hooks/mutations for registering a team, cancelling a registration, and loading registrations for a tournament; handle backend authorization errors gracefully in UI state."
+        },
+        {
+          "path": "frontend/src/components/RegistrationForm.tsx",
+          "operation": "create",
+          "description": "Create a registration form component that captures captain IGN, optional team name, and squad member IGNs up to the tournament’s team size; submit via register mutation and show confirmation/error in English."
+        },
+        {
+          "path": "frontend/src/components/MyRegistrationPanel.tsx",
+          "operation": "create",
+          "description": "Create a details-page panel that shows the signed-in user’s current registration (if any) and allows cancel when registration is open; ensure unauthenticated users see a login prompt instead of the form."
+        },
+        {
+          "path": "frontend/src/components/OrganizerRegistrationsTable.tsx",
+          "operation": "create",
+          "description": "Create an organizer-only table/list view of all registered entries for a tournament (read from registrations query) for use in the tournament management area."
+        },
+        {
+          "path": "frontend/src/pages/TournamentDetailsPage.tsx",
+          "operation": "modify",
+          "description": "Wire in RegistrationForm/MyRegistrationPanel and enforce UI gating: unauthenticated users cannot register; show registration availability rules (status, registration window, full capacity) and disable/deny actions accordingly."
+        },
+        {
+          "path": "frontend/src/pages/MyRegistrationsPage.tsx",
+          "operation": "modify",
+          "description": "Wire My Registrations to authenticated state (RequireAuth) and display registrations (initially by loading tournaments then per-tournament registrations for the user, if no dedicated backend list exists); provide cancel navigation/action when applicable."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add organizer match/round management UI and participant read-only bracket/round display (frontend scaffolding for MVP manual management).",
+      "acceptanceCriteria": [
+        "Organizer can create at least one round and add matches for a tournament.",
+        "Organizer can assign registrations to matches and submit results.",
+        "Participants can view rounds/matches and results on the Tournament Details page.",
+        "Backend enforces that only the organizer (or an admin role if implemented) can modify matches/results."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/brackets/BracketViewer.tsx",
+          "operation": "create",
+          "description": "Create a read-only bracket/round viewer component to display rounds, matches, assignments, and results on Tournament Details; initially support local/stateful rendering with clear placeholders for backend wiring."
+        },
+        {
+          "path": "frontend/src/components/brackets/OrganizerBracketEditor.tsx",
+          "operation": "create",
+          "description": "Create an organizer-only UI for manual round creation, match creation, assigning registrations into matches, and recording results; store draft state locally for MVP until matching backend capabilities exist; ensure it is wrapped by organizer/admin guard."
+        },
+        {
+          "path": "frontend/src/pages/TournamentDetailsPage.tsx",
+          "operation": "modify",
+          "description": "Add a 'Rounds & Results' section that shows BracketViewer to all users and shows OrganizerBracketEditor only to the organizer/admin (UI gating)."
+        },
+        {
+          "path": "frontend/src/components/RequireOrganizerOrAdmin.tsx",
+          "operation": "modify",
+          "description": "Ensure the guard can be reused for bracket management areas within Tournament Details (organizer-only modifications)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Provide organizer/admin tournament management UI: edit info, change status (open/close/lock/etc.), and publish announcements shown on details.",
+      "acceptanceCriteria": [
+        "Organizer can change tournament status (open/close/lock/start/complete/cancel) via UI controls.",
+        "Announcements can be created and are visible to all viewers of the tournament details.",
+        "Non-organizers cannot access organizer controls."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useTournamentAdmin.ts",
+          "operation": "create",
+          "description": "Create mutation hooks for updating tournament fields and updating tournament status using the backend actor; surface success/error states in English and handle authorization failures gracefully."
+        },
+        {
+          "path": "frontend/src/components/OrganizerTournamentPanel.tsx",
+          "operation": "create",
+          "description": "Create an organizer/admin-only management panel for Tournament Details including: edit tournament info, status change controls, and registration/bracket lock messaging; wire status changes and edits to mutation hooks where backend capabilities exist."
+        },
+        {
+          "path": "frontend/src/components/announcements/AnnouncementsFeed.tsx",
+          "operation": "create",
+          "description": "Create a read-only announcements feed UI section to display tournament announcements on Tournament Details; for MVP, render from local placeholder state and prepare the component API for future backend wiring."
+        },
+        {
+          "path": "frontend/src/components/announcements/AnnouncementComposer.tsx",
+          "operation": "create",
+          "description": "Create an organizer/admin-only announcement composer UI (text updates) that appends to local placeholder announcements for MVP; ensure it is guarded and clearly marked as organizer-only."
+        },
+        {
+          "path": "frontend/src/pages/TournamentDetailsPage.tsx",
+          "operation": "modify",
+          "description": "Wire OrganizerTournamentPanel into Tournament Details under organizer/admin guard; add announcements section that shows AnnouncementsFeed to all and AnnouncementComposer only to organizer/admin."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Apply a coherent esports visual theme (non-blue/purple primary) using Tailwind and composed UI components without editing read-only UI component sources.",
+      "acceptanceCriteria": [
+        "Theme is consistent across all primary pages and components.",
+        "Primary palette is not blue/purple; contrast and readability are acceptable.",
+        "UI uses Tailwind + existing UI components by composition (no edits to read-only component sources)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global Tailwind base layers and define a warm/dark esports theme via CSS variables (e.g., primary in warm red/orange, avoid blue/purple) to drive shadcn-style tokens consistently across pages."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extension as needed to support the esports look (typography/spacing/shadows) while keeping primary colors non-blue/purple and consistent with CSS variable tokens."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout styling (spacing, background, typography) using Tailwind utility classes and composition (do not edit files under frontend/src/components/ui)."
+        },
+        {
+          "path": "frontend/src/components/TournamentCard.tsx",
+          "operation": "modify",
+          "description": "Ensure tournament cards use the global theme tokens and consistent spacing/typography for an esports tournament experience."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Include required generated static images as frontend assets and use them in the UI (header/hero/branding).",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "Home page and/or app header uses the generated images without routing through the backend.",
+        "Assets load correctly in the built app."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/ffm-tournament-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated static image asset: frontend/public/assets/generated/ffm-tournament-logo.dim_512x512.png (Esports tournament shield logo with subtle flame motif, dark background friendly)."
+        },
+        {
+          "path": "frontend/public/assets/generated/ffm-hero-banner.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated static image asset: frontend/public/assets/generated/ffm-hero-banner.dim_1600x600.png (Wide hero banner with abstract esports arena lighting, warm accent colors)."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Reference and display frontend/public/assets/generated/ffm-tournament-logo.dim_512x512.png in the app header for branding (direct static asset usage; no backend)."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Reference and display frontend/public/assets/generated/ffm-hero-banner.dim_1600x600.png as the home hero/banner and ensure it loads correctly in the built app."
+        }
+      ]
+    }
+  ]
+}

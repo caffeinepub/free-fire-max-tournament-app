@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Plan and build a Free Fire Max tournament app.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Esports tournament shield logo with subtle flame motif, dark background friendly (ffm-tournament-logo.dim_512x512.png)\n- Wide hero banner with abstract esports arena lighting, warm accent colors (ffm-hero-banner.dim_1600x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-the-core-app-navigation-and-page-structure-for-a-free-fire-max-tournament-app-with-these-primary-sections-home-upcoming-tournaments-tournaments-browse-search-tournament-details-create-tournament-admin-organizer-my-registrations-and-profile",
+      "title": "Create the core app navigation and page structure for a Free Fire Max Tournament App with these primary sections: Home (upcoming tournaments), Tournaments (browse/search), Tournament Details, Create Tournament (admin/organizer), My Registrations, and Profile.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-a-signed-in-user-experience-showing-the-user-as-authenticated-and-gating-organizer-admin-actions-like-creating-editing-tournaments-behind-authentication",
+      "title": "Implement Internet Identity sign-in and a signed-in user experience (showing the user as authenticated, and gating organizer/admin actions like creating/editing tournaments behind authentication).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-tournament-registration-flows-for-players-teams-allow-an-authenticated-user-to-register-capture-in-game-name-ign-optional-team-name-and-squad-member-igns-up-to-the-tournament-s-team-size-and-allow-the-user-to-view-cancel-their-registration-when-registration-is-open",
+      "title": "Implement tournament registration flows for players/teams: allow an authenticated user to register, capture in-game name (IGN), optional team name, and squad member IGNs (up to the tournament’s team size), and allow the user to view/cancel their registration when registration is open.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-match-bracket-management-for-organizers-ability-to-create-match-rounds-at-least-manual-round-creation-assign-registered-teams-players-into-matches-record-match-results-placement-points-or-winner-and-display-a-read-only-bracket-round-view-for-participants",
+      "title": "Add match/bracket management for organizers: ability to create match rounds (at least manual round creation), assign registered teams/players into matches, record match results (placement/points or winner), and display a read-only bracket/round view for participants.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-an-organizer-admin-dashboard-for-managing-a-tournament-edit-tournament-info-open-close-registrations-lock-the-bracket-and-publish-announcements-text-updates-shown-on-the-tournament-details-page",
+      "title": "Provide an organizer/admin dashboard for managing a tournament: edit tournament info, open/close registrations, lock the bracket, and publish announcements (text updates) shown on the Tournament Details page.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-distinctive-visual-theme-across-the-app-colors-typography-spacing-and-components-suitable-for-an-esports-tournament-experience-avoiding-blue-purple-as-primary-brand-colors",
+      "title": "Apply a coherent, distinctive visual theme across the app (colors, typography, spacing, and components) suitable for an esports tournament experience, avoiding blue/purple as primary brand colors.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-include-required-static-images-as-frontend-assets-and-use-them-in-the-ui-header-hero-and-basic-branding-store-them-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
+      "title": "Generate and include required static images as frontend assets and use them in the UI (header/hero and basic branding). Store them under frontend/public/assets/generated and reference them directly from the frontend.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a Free Fire Max Tournament App (core tournament app functionality to be defined).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement backend data models and persistence for tournaments, including: tournament name, description, rules, region, start date/time, registration open/close date/time, max slots (teams/squads), entry type (solo/duo/squad/custom), prize details (text), organizer principal, and tournament status (draft/open/locked/started/completed/cancelled).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Free Fire Max Tournament App",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,172 @@
+{
+  "kind": "build_request",
+  "title": "Free Fire Max Tournament App (MVP)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the core app navigation and page structure for a Free Fire Max Tournament App with these primary sections: Home (upcoming tournaments), Tournaments (browse/search), Tournament Details, Create Tournament (admin/organizer), My Registrations, and Profile.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App has a working navigation layout that lets users reach all primary sections.",
+        "Routes/pages render without placeholder errors and use English UI text.",
+        "Tournament list and details views are wired to data queries (even if seeded with initial sample data until backend is complete)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement Internet Identity sign-in and a signed-in user experience (showing the user as authenticated, and gating organizer/admin actions like creating/editing tournaments behind authentication).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users can browse tournaments but cannot create/edit tournaments or register.",
+        "Authenticated users can view their profile and register for tournaments.",
+        "UI clearly indicates signed-in/signed-out state in English."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement backend data models and persistence for tournaments, including: tournament name, description, rules, region, start date/time, registration open/close date/time, max slots (teams/squads), entry type (solo/duo/squad/custom), prize details (text), organizer principal, and tournament status (draft/open/locked/started/completed/cancelled).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes query/update methods to create, read, list, and update tournaments.",
+        "Tournaments persist across canister upgrades using stable storage patterns appropriate for a single-actor Motoko canister.",
+        "Tournament status transitions are validated (e.g., cannot register when not open)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement tournament registration flows for players/teams: allow an authenticated user to register, capture in-game name (IGN), optional team name, and squad member IGNs (up to the tournament’s team size), and allow the user to view/cancel their registration when registration is open.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can register for an open tournament and sees confirmation in the UI.",
+        "Registration is blocked when the tournament is full or registration is closed/locked.",
+        "My Registrations page shows the user’s registrations and their status.",
+        "Organizer can view a list of registered entries for their tournament."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add match/bracket management for organizers: ability to create match rounds (at least manual round creation), assign registered teams/players into matches, record match results (placement/points or winner), and display a read-only bracket/round view for participants.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Organizer can create at least one round and add matches for a tournament.",
+        "Organizer can assign registrations to matches and submit results.",
+        "Participants can view rounds/matches and results on the Tournament Details page.",
+        "Backend enforces that only the organizer (or an admin role if implemented) can modify matches/results."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Provide an organizer/admin dashboard for managing a tournament: edit tournament info, open/close registrations, lock the bracket, and publish announcements (text updates) shown on the Tournament Details page.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Organizer can change tournament status (open/close/lock/start/complete/cancel) via UI controls.",
+        "Announcements can be created and are visible to all viewers of the tournament details.",
+        "Non-organizers cannot access organizer controls."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Apply a coherent, distinctive visual theme across the app (colors, typography, spacing, and components) suitable for an esports tournament experience, avoiding blue/purple as primary brand colors.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across all primary pages and components.",
+        "Primary palette is not blue/purple; contrast and readability are acceptable.",
+        "UI uses Tailwind + existing UI components by composition (no edits to read-only component sources)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Generate and include required static images as frontend assets and use them in the UI (header/hero and basic branding). Store them under frontend/public/assets/generated and reference them directly from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Free Fire max Tournament App"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "Home page and/or app header uses the generated images without routing through the backend.",
+        "Assets load correctly in the built app."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in the main actor file).",
+    "Do not edit files under frontend/src/components/ui; compose them instead.",
+    "Do not edit immutable hook/bootstrap paths listed in SYSTEM_CONTEXT (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Real-time chat, WebSockets, or live match updates.",
+    "Integrations with external game APIs or third-party auth providers beyond Internet Identity.",
+    "Payments/entry fees processing.",
+    "Automated bracket seeding algorithms beyond basic manual assignment for the MVP."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Esports tournament shield logo with subtle flame motif, dark background friendly (ffm-tournament-logo.dim_512x512.png)",
+      "Wide hero banner with abstract esports arena lighting, warm accent colors (ffm-hero-banner.dim_1600x600.png)"
+    ],
+    "edits": []
+  }
+}

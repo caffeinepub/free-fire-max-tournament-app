@@ -1,0 +1,110 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-16T14:19:30.445Z",
+  "summary": "The diff implements core routing/navigation, authentication UI (Internet Identity), tournament creation and listing/query hooks, a theme via CSS variables, and basic registration UI components. However, there is no clear evidence of bracket/match management or announcements, and backend persistence/upgrade-safe stable storage cannot be confirmed from the truncated backend diff. Image asset files themselves are not evidenced in the provided diff summary.",
+  "missing_requirements": [
+    {
+      "id": "REQ-3",
+      "requirement": "Tournaments persist across canister upgrades using stable storage patterns appropriate for a single-actor Motoko canister; and status/transition validation (e.g., cannot register when not open).",
+      "reason": "backend/main.mo is truncated and shows in-memory vars/maps but no visible stable variables, preupgrade/postupgrade hooks, or explicit validation logic for status transitions/registration gating beyond what may exist in truncated sections.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Add match/bracket management for organizers: create rounds, assign registrations to matches, record results, and display read-only bracket/round view; with backend enforcement that only organizer/admin can modify matches/results.",
+      "reason": "No files in the diff summary show data models or endpoints for rounds/matches/results, nor any UI pages/components for bracket management or read-only bracket display.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/pages/TournamentDetailsPage.tsx (not shown in diff summary)",
+        "frontend/src/hooks/useQueries.ts (truncated but shows tournaments/registrations/profile hooks, no bracket hooks evidenced)"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Publish announcements (text updates) shown on the Tournament Details page, with organizer-only controls and non-organizer access restrictions.",
+      "reason": "No evidence of announcement data models/methods in backend or UI components/hooks for creating and rendering announcements in the provided diff summary.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/components/OrganizerTournamentPanel.tsx (status select only; no announcements UI)"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Generated images exist under frontend/public/assets/generated with the specified filenames (ffm-tournament-logo.dim_512x512.png, ffm-hero-banner.dim_1600x600.png) and are used in the UI.",
+      "reason": "UI references the logo path in AppNav, but the diff summary does not show the actual image files added under frontend/public/assets/generated, nor any reference/evidence for the hero banner file usage.",
+      "evidence": [
+        "frontend/src/components/AppNav.tsx",
+        "(frontend/public/assets/generated/* not shown in diff summary)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Social media footer section (X/Facebook/Instagram/YouTube) and a caffeine.ai referral link in the app footer.",
+      "reason": "Not requested by any REQ; BuildRequest focuses on tournament functionality, auth, theme, and specific assets.",
+      "evidence": [
+        "frontend/src/components/AppLayout.tsx"
+      ]
+    },
+    {
+      "description": "Admin-token/secret URL parameter flow and explicit access-control initialization call from the frontend actor hook.",
+      "reason": "BuildRequest requires Internet Identity and gating organizer actions, but does not request a URL-secret-based admin bootstrap mechanism.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Role/permission system scaffolding (authorization mixins/access control, admin/user permissions) beyond simple organizer-principal checks.",
+      "reason": "REQs mention organizer/admin gating but do not request a full role/permission framework; this is extra implementation not explicitly specified.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/hooks/useCurrentUser.ts"
+      ]
+    },
+    {
+      "description": "Dark/light theme toggling via next-themes ThemeProvider.",
+      "reason": "REQ-7 requires a coherent theme, but does not request runtime theme switching support.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppLayout.tsx",
+    "frontend/src/components/AppNav.tsx",
+    "frontend/src/components/AuthStatusButton.tsx",
+    "frontend/src/components/MyRegistrationPanel.tsx",
+    "frontend/src/components/OrganizerRegistrationsTable.tsx",
+    "frontend/src/components/OrganizerTournamentPanel.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/RegistrationForm.tsx",
+    "frontend/src/components/RequireAuth.tsx",
+    "frontend/src/components/TournamentCard.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useAuth.ts",
+    "frontend/src/hooks/useCurrentUser.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CreateTournamentPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/MyRegistrationsPage.tsx",
+    "frontend/src/pages/ProfilePage.tsx",
+    "frontend/src/pages/TournamentDetailsPage.tsx",
+    "frontend/src/pages/TournamentsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
